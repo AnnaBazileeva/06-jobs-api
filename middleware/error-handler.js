@@ -1,5 +1,5 @@
-const { CustomAPIError } = require('../errors')
 const { StatusCodes } = require('http-status-codes')
+const {ValidationError} = require("joi");
 const errorHandlerMiddleware = (err, req, res, next) => {
 
   let customError = {
@@ -7,11 +7,12 @@ const errorHandlerMiddleware = (err, req, res, next) => {
     msg: err.message || 'Something went wrong'
   }
 
-  if (err instanceof CustomAPIError) {
-    return res.status(err.statusCode).json({ msg: err.message })
+  if(err.name === ValidationError) {
+    customError.msg = Object.values(err.errors).map((item)=>item.message).join(',')
+    customError.statusCode =400
   }
   if(err.code && err.code === 11000) {
-    customError.msg = ` Duplicate value for  ${err.keyValue}, choose another value`
+    customError.msg = ` Duplicate value for  ${Object.keys(err.keyValue)}, choose another value`
     customError.statusCode = 400
   }
   return res.status(customError.statusCode).json({ msg: customError.msg })
