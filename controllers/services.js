@@ -4,7 +4,7 @@ const {BadRequestError, NotFoundError} = require('../errors')
 
 const getAllServices = async(req, res) => {
     const services = await  Service.find({createdBy:req.user.userId}).sort('createdAt')
-    res.status(StatusCodes.OK).json({services, coint:services.length})
+    res.status(StatusCodes.OK).json({services, count:services.length})
 }
 
 const getService = async(req, res) => {
@@ -52,7 +52,7 @@ const deleteService = async(req, res) => {
     if (!service) {
         throw new NotFoundError(`Not service with the id ${serviceId}`)
     }
-    res.status(StatusCodes.OK).json(deleteService);
+    res.status(StatusCodes.OK).json({msg:'Service deleted successfully'});
 }
 
 module.exports = {

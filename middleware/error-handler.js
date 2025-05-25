@@ -7,7 +7,7 @@ const errorHandlerMiddleware = (err, req, res, next) => {
     msg: err.message || 'Something went wrong'
   }
 
-  if(err.name === ValidationError) {
+  if(err instanceof ValidationError) {
     customError.msg = Object.values(err.errors).map((item)=>item.message).join(',')
     customError.statusCode =400
   }
