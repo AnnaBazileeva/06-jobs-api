@@ -1,0 +1,69 @@
+import { enableInput, inputEnabled, message, setDiv, token } from "./index.js";
+import {showServices} from "./services";
+
+let addEditDiv = null;
+let company = null;
+let location = null;
+let status = null;
+let addingService = null;
+
+export const handleAddEdit = () => {
+    addEditDiv = document.getElementById("edit-service");
+    company = document.getElementById("company");
+    location = document.getElementById("location");
+    status = document.getElementById("status");
+    addingService = document.getElementById("adding-service");
+    const editCancel = document.getElementById("edit-cancel");
+
+    addEditDiv.addEventListener("click", async (e) => {
+        if (inputEnabled && e.target.nodeName === "BUTTON") {
+            if (e.target === addingService) {
+                enableInput(false);
+
+                let method = "POST";
+                let url = "/api/v1/services";
+                try {
+                    const response = await fetch(url, {
+                        method: method,
+                        headers: {
+                            "Content-Type": "application/json",
+                            Authorization: `Bearer ${token}`,
+                        },
+                        body: JSON.stringify({
+                            company: company.value,
+                            location: location.value,
+                            status: status.value,
+                        }),
+                    });
+
+                    const data = await response.json();
+                    if (response.status === 201) {
+
+                        message.textContent = "The service entry was created.";
+
+                        company.value = "";
+                        location.value = "";
+                        status.value = "pending";
+
+                        showServices();
+                    } else {
+                        message.textContent = data.msg;
+                    }
+                } catch (err) {
+                    console.log(err);
+                    message.textContent = "A communication error occurred.";
+                }
+
+                enableInput(true);
+            } else if (e.target === editCancel) {
+                message.textContent = "";
+                showServices();
+            }
+        }
+    });
+}
+
+export const showAddEdit = (service) => {
+    message.textContent = "";
+    setDiv(addEditDiv);
+}
