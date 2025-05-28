@@ -3,11 +3,20 @@ const {StatusCodes} = require('http-status-codes')
 const {BadRequestError, NotFoundError} = require('../errors')
 
 const getAllServices = async(req, res) => {
-    res.send('get all services')
+    const services = await  Service.find({createdBy:req.user.userId}).sort('createdAt')
+    res.status(StatusCodes.OK).json({services, count:services.length})
 }
 
 const getService = async(req, res) => {
-    res.send('get service')
+    const {user:{userId},params:{id: serviceId}} =req
+
+    const service = await Service.findOne({
+        _id:serviceId,createdBy:userId
+    })
+    if(!service) {
+        throw new NotFoundError(`Not service with the id ${serviceId}`)
+    }
+    res.status(StatusCodes.OK).json({service})
 }
 
 const createService = async(req, res) => {
@@ -17,11 +26,33 @@ const createService = async(req, res) => {
 }
 
 const updateService = async(req, res) => {
-    res.send('update service')
-}
+    const {
+        body:{company, serviceName},
+        user: {userId},
+        params: {id: serviceId},
+    } = req;
 
+    if(company === '' || serviceName === '') {
+        throw new BadRequestError("Company and service can't be empty")
+    }
+
+    const updatedService = await Service.findByIdAndUpdate({_id: serviceId, createdBy: userId}, req.body, {new:true, runValidators:true})
+
+    if(!updatedService) {
+    throw new NotFoundError(`Not service with the id ${serviceId}`)
+}
+res.status(StatusCodes.OK).json(updatedService );
+}
 const deleteService = async(req, res) => {
-    res.send('delete service')
+    const {
+        user: {userId},
+        params: {id: serviceId},
+    } = req;
+    const service = await Service.findByIdAndRemove({_id: serviceId, createdBy: userId})
+    if (!service) {
+        throw new NotFoundError(`Not service with the id ${serviceId}`)
+    }
+    res.status(StatusCodes.OK).json({msg:'Service deleted successfully'});
 }
 
 module.exports = {

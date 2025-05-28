@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 const ServiceSchema = new mongoose.Schema({
-    service: {
+    serviceName: {
         type: String,
         required:[true, "Please provide your service"],
         maxlength: 30
