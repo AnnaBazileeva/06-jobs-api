@@ -13,8 +13,8 @@ export let inputEnabled = true;
 export const enableInput = (state) => {
     inputEnabled = state;
 };
+let token = null;
 
-export let token = null;
 export const setToken = (value) => {
     token = value;
     if (value) {
@@ -22,6 +22,12 @@ export const setToken = (value) => {
     } else {
         localStorage.removeItem("token");
     }
+};
+export const getToken = () => {
+    if (!token) {
+        token = localStorage.getItem("token");
+    }
+    return token;
 };
 
 export let message = null;
@@ -33,14 +39,15 @@ import { handleAddEdit } from "./addEdit.js";
 import { handleRegister } from "./register.js";
 
 document.addEventListener("DOMContentLoaded", () => {
-    token = localStorage.getItem("token");
+    const tokenFromStorage = localStorage.getItem("token");
+    setToken(tokenFromStorage);
     message = document.getElementById("message");
     handleLoginRegister();
     handleLogin();
     handleServices();
     handleRegister();
     handleAddEdit();
-    if (token) {
+    if (getToken()) {
         showServices();
     } else {
         showLoginRegister();

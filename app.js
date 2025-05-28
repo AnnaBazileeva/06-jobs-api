@@ -15,7 +15,7 @@ const authenticateUser = require('./middleware/authentication')
 
 //routers
 const authRouter = require('./routes/auth')
-const jobsRouter = require('./routes/services')
+const servicesRouter = require('./routes/services')
 
 // error handler
 const notFoundMiddleware = require('./middleware/not-found');
@@ -26,7 +26,8 @@ app.use(rateLimiter({windowMs: 15 *60*1000, max:100,}
 ))
 app.use(express.json());
 app.use(helmet())
-app.use(cors())
+app.use(cors({origin: 'http://localhost:3001',
+  credentials: true}))
 app.use(xss())
 
 
@@ -36,7 +37,7 @@ app.get("/", (req, res) => {
 app.use(express.static("public"));
 // routes
 app.use('/api/v1/auth', authRouter)
-app.use('/api/v1/services',authenticateUser ,jobsRouter)
+app.use('/api/v1/services',authenticateUser ,servicesRouter)
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);

@@ -15,6 +15,8 @@ let email1 = null;
 let password1 = null;
 let password2 = null;
 
+const BASE_URL = "http://localhost:3000"
+
 export const handleRegister = () => {
     registerDiv = document.getElementById("register-div");
     name = document.getElementById("name");
@@ -24,7 +26,7 @@ export const handleRegister = () => {
     const registerButton = document.getElementById("register-button");
     const registerCancel = document.getElementById("register-cancel");
 
-    registerDiv.addEventListener("click", async (e) => {
+    registerButton.addEventListener("click", async (e) => {
         if (inputEnabled && e.target.nodeName === "BUTTON") {
             if (e.target === registerButton) {
                 if (password1.value != password2.value) {
@@ -33,7 +35,7 @@ export const handleRegister = () => {
                     enableInput(false);
 
                     try {
-                        const response = await fetch("/api/v1/auth/register", {
+                        const response = await fetch(`${BASE_URL}/api/v1/auth/register`, {
                             method: "POST",
                             headers: {
                                 "Content-Type": "application/json",

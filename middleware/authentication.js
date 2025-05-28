@@ -14,9 +14,11 @@ const auth = async (req, res, next) => {
 
         req.user = {userId: payload.userId, name:payload.name}
         next()
-    } catch (error) {
+    } catch (error) { console.log("JWT_SECRET from env: ", process.env.JWT_SECRET);
 throw  new UnauthenticatedError('Authentication invalid')
     }
+
+
 }
 
 module.exports=auth

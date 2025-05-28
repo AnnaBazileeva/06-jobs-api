@@ -3,7 +3,7 @@ import {
     setDiv,
     message,
     setToken,
-    token,
+    getToken,
     enableInput,
 } from "./index.js";
 import { showLoginRegister } from "./loginRegister.js";
@@ -12,17 +12,18 @@ import { showAddEdit } from "./addEdit.js";
 let servicesDiv = null;
 let servicesTable = null;
 let servicesTableHeader = null;
+const BASE_URL = "http://localhost:3000";
 
 export const handleServices = () => {
-    servicesDivs = document.getElementById("services");
+    servicesDiv = document.getElementById("services");
     const logoff = document.getElementById("logoff");
     const addService = document.getElementById("add-service");
-    servicesTables = document.getElementById("services-table");
+    servicesTable = document.getElementById("services-table");
     servicesTableHeader = document.getElementById("services-table-header");
 
     servicesDiv.addEventListener("click", (e) => {
         if (inputEnabled && e.target.nodeName === "BUTTON") {
-            if (e.target === addJob) {
+            if (e.target === addService) {
                 showAddEdit(null);
             } else if (e.target === logoff) {
                 setToken(null);
@@ -39,4 +40,30 @@ export const handleServices = () => {
 
 export const showServices = async () => {
     setDiv(servicesDiv);
+    try {
+        const token = getToken();
+        const response = await fetch(`${BASE_URL}/api/v1/services`, {
+            method: "GET",
+            headers: {
+                "Authorization": `Bearer ${token}`,
+                "Content-Type": "application/json",
+
+            },
+        });
+        console.log("Token for request:", token);
+
+
+
+        const data = await response.json();
+
+        if (response.status === 200) {
+            message.textContent = "Services loaded.";
+            renderServices(data.services);
+        } else {
+            message.textContent = data.msg || "Could not load services.";
+        }
+    } catch (err) {
+        console.error(err);
+        message.textContent = "A communication error occurred.";
+    }
 };
