@@ -2,7 +2,6 @@ import {
     inputEnabled,
     setDiv,
     message,
-    token,
     enableInput,
     setToken,
 } from "./index.js";
@@ -62,26 +61,26 @@ export const handleRegister = () => {
                             message.textContent = data.msg;
                         }
                     } catch (err) {
-                        console.error(err);
+
                         message.textContent = "A communications error occurred.";
                     }
 
                     enableInput(true);
                 }
-            } else if (e.target === registerCancel) {
+            } registerCancel.addEventListener("click", (e) => {
                 name.value = "";
                 email1.value = "";
                 password1.value = "";
                 password2.value = "";
                 showLoginRegister();
-            }
+            })
         }
     });
 };
 
 export const showRegister = () => {
-    email1.value = null;
-    password1.value = null;
-    password2.value = null;
+    email1.value = "";
+    password1.value = "";
+    password2.value = "";
     setDiv(registerDiv);
 };

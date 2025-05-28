@@ -1,5 +1,6 @@
 let activeDiv = null;
 export const setDiv = (newDiv) => {
+    if (!newDiv) return;
     if (newDiv != activeDiv) {
         if (activeDiv) {
             activeDiv.style.display = "none";

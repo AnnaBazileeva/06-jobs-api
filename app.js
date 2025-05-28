@@ -26,7 +26,7 @@ app.use(rateLimiter({windowMs: 15 *60*1000, max:100,}
 ))
 app.use(express.json());
 app.use(helmet())
-app.use(cors({origin: 'http://localhost:3001',
+app.use(cors({origin: true,
   credentials: true}))
 app.use(xss())
 
@@ -38,6 +38,9 @@ app.use(express.static("public"));
 // routes
 app.use('/api/v1/auth', authRouter)
 app.use('/api/v1/services',authenticateUser ,servicesRouter)
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, 'public', 'index.html'));
+});
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);

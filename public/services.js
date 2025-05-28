@@ -4,7 +4,6 @@ import {
     message,
     setToken,
     getToken,
-    enableInput,
 } from "./index.js";
 import { showLoginRegister } from "./loginRegister.js";
 import { showAddEdit } from "./addEdit.js";
@@ -67,3 +66,23 @@ export const showServices = async () => {
         message.textContent = "A communication error occurred.";
     }
 };
+
+function renderServices(services) {
+
+    servicesTable.replaceChildren(servicesTableHeader);
+
+    services.forEach(service => {
+        const row = document.createElement('tr');
+
+        row.innerHTML = `
+      <td>${service.company || ''}</td>
+      <td>${service.serviceName || ''}</td>
+      <td>${service.status || ''}</td>
+      <td>${service.location || ''}</td>
+      <td>${service.description || ''}</td>
+      <td></td>
+    `;
+
+        servicesTable.appendChild(row);
+    });
+}
