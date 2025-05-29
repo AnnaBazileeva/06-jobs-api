@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Services List</title>
+</head>
+
+<body>
+<h1>Services List</h1>
+<hr />
+<p id="message"></p>
+<hr />
+<div id="logon-register" style="display:block">
+    <button type="button" id="logon">logon</button>
+    <button type="button" id="register">register</button>
+</div>
+<div id="logon-div" style="display:none;">
+    <form>
+        <div>
+            <label for="email">email:</label>
+            <input type="email" id="email" />
+        </div>
+        <div>
+            <label for="password">password:</label>
+            <input type="password" id="password" />
+        </div>
+        <button type="button" id="logon-button">logon</button>
+        <button type="button" id="logon-cancel">cancel</button>
+    </form>
+</div>
+<div id="register-div" style="display:none;">
+    <form>
+        <div>
+            <label for="name">name:</label>
+            <input type="text" id="name" />
+        </div>
+        <div>
+            <label for="email1">email:</label>
+            <input type="email" id="email1" />
+        </div>
+        <div>
+            <label for="password1">password:</label>
+            <input type="password" id="password1" />
+        </div>
+        <div>
+            <label for="password2">verify password:</label>
+            <input type="password" id="password2" />
+        </div>
+        <button type="button" id="register-button">register</button>
+        <button type="button" id="register-cancel">cancel</button>
+    </form>
+</div>
+<div id="services" style="display:none;">
+    <form>
+        <p id="services-message"></p>
+        <table id="services-table">
+            <thead>
+            <tr id="services-table-header">
+                <th>Company</th>
+                <th>Service Name</th>
+                <th>Status</th>
+                <th>Location</th>
+                <th>Description</th>
+                <th colspan="2"></th>
+            </tr>
+            </thead>
+            <tbody id="services-table-body">
+            </tbody>
+        </table>
+        <button type="button" id="add-service">Add service</button>
+        <button type="button" id="logoff">log off</button>
+    </form>
+</div>
+<div id="edit-service" style="display:none;">
+    <form>
+        <div>
+            <label for="company">company:</label>
+            <input type="text" id="company" />
+        </div>
+        <div>
+            <label for="serviceName">service name:</label>
+            <input type="text" id="serviceName" />
+        </div>
+        <div>
+            <label for="description">description:</label>
+            <input type="text" id="description" />
+        </div>
+        <div>
+            <label for="location">location:</label>
+            <input type="text" id="location" />
+        </div>
+        <div>
+            <label for="status">status:</label>
+            <select id="status">
+                <option value="reserved">reserved</option>
+                <option value="available">available</option>
+                <option value="unavailable">unavailable</option>
+            </select>
+        </div>
+
+        <button type="button" id="adding-service">add</button>
+        <button type="button" id="edit-cancel">cancel</button>
+
+    </form>
+</div>
+
+<script type="module" src="./index.js"></script>
+</body>
+</html>
