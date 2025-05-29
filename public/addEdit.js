@@ -60,6 +60,7 @@ export const handleAddEdit = () => {
                     }
                 } catch (err) {
                     console.log(err);
+                    console.log(err);
                     message.textContent = "A communication error occurred.";
                 }
 
