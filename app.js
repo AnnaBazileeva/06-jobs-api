@@ -6,9 +6,10 @@ const cors = require('cors')
 const xss = require('xss-clean')
 const rateLimiter = require('express-rate-limit')
 
+
 const express = require('express');
 const app = express();
-
+const path = require('path');
 //connectDB
 const connectDB = require('./db/connect')
 const authenticateUser = require('./middleware/authentication')
@@ -35,12 +36,17 @@ app.get("/", (req, res) => {
   res.send('<h1>Services API</h1><a href="/api-docs">Documentation</a>');
 });
 app.use(express.static("public"));
+app.use((req, res, next) => {
+  console.log(req.method, req.originalUrl);
+  next();
+});
 // routes
+app.post('/test', (req, res) => {
+  res.send('POST /test OK');
+});
+
 app.use('/api/v1/auth', authRouter)
 app.use('/api/v1/services',authenticateUser ,servicesRouter)
-app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, 'public', 'index.html'));
-});
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);

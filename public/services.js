@@ -8,6 +8,7 @@ import {
 import { showLoginRegister } from "./loginRegister.js";
 import { showAddEdit } from "./addEdit.js";
 
+
 let servicesDiv = null;
 let servicesTable = null;
 let servicesTableHeader = null;
@@ -28,8 +29,6 @@ export const handleServices = () => {
                 setToken(null);
 
                 message.textContent = "You have been logged off.";
-
-                servicesTable.replaceChildren([servicesTableHeader]);
 
                 showLoginRegister();
             }
@@ -68,8 +67,8 @@ export const showServices = async () => {
 };
 
 function renderServices(services) {
-
-    servicesTable.replaceChildren(servicesTableHeader);
+    const tbody = document.getElementById("services-table-body");
+    tbody.innerHTML = "";
 
     services.forEach(service => {
         const row = document.createElement('tr');
@@ -80,9 +79,10 @@ function renderServices(services) {
       <td>${service.status || ''}</td>
       <td>${service.location || ''}</td>
       <td>${service.description || ''}</td>
-      <td></td>
+      <td><button>Edit</button></td>
+            <td><button>Delete</button></td>
     `;
 
-        servicesTable.appendChild(row);
+        tbody.appendChild(row);
     });
 }

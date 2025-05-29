@@ -23,6 +23,9 @@ export const handleLogin = () => {
 
     logonButton.addEventListener("click", async () => {
         if (!inputEnabled) return;
+        console.log("inputEnabled = true");
+        console.log("Email:", email.value);
+        console.log("Password:", password.value);
         enableInput(false);
 
         try {
@@ -38,6 +41,7 @@ export const handleLogin = () => {
             });
 
             const data = await response.json();
+            console.log("Ответ сервера:", data);
 
             if (response.status === 200) {
                 message.textContent = `Logon successful. Welcome ${data.user.name}`;
@@ -66,7 +70,11 @@ export const handleLogin = () => {
 };
 
 export const showLogin = () => {
+    email = document.getElementById("email");
+    password = document.getElementById("password");
+
     email.value = "";
     password.value = "";
-    setDiv(loginDiv);
+
+    setDiv(document.getElementById("logon-div"));
 };

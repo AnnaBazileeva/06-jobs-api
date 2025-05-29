@@ -16,8 +16,8 @@
     <button type="button" id="logon">logon</button>
     <button type="button" id="register">register</button>
 </div>
-<div id="login" style="display:none;">
-    <form method="POST">
+<div id="logon-div" style="display:none;">
+    <form>
         <div>
             <label for="email">email:</label>
             <input type="email" id="email" />
@@ -28,10 +28,10 @@
         </div>
         <button type="button" id="logon-button">logon</button>
         <button type="button" id="logon-cancel">cancel</button>
-        </form>
+    </form>
 </div>
 <div id="register-div" style="display:none;">
-    <form method="POST">
+    <form>
         <div>
             <label for="name">name:</label>
             <input type="text" id="name" />
@@ -50,30 +50,42 @@
         </div>
         <button type="button" id="register-button">register</button>
         <button type="button" id="register-cancel">cancel</button>
-        </form>
+    </form>
 </div>
 <div id="services" style="display:none;">
-    <form method="POST">
-    <p id="services-message"></p>
-    <table id="services-table">
-        <tr id="services-table-header">
-            <th>Company</th>
-            <th>Service Name</th>
-            <th>Status</th>
-            <th>Location</th>
-            <th>Description</th>
-            <th colspan="2"></th>
-        </tr>
-    </table>
-    <button type="button" id="add-service">add service</button>
-    <button type="button" id="logoff">log off</button>
-        </form>
+    <form>
+        <p id="services-message"></p>
+        <table id="services-table">
+            <thead>
+            <tr id="services-table-header">
+                <th>Company</th>
+                <th>Service Name</th>
+                <th>Status</th>
+                <th>Location</th>
+                <th>Description</th>
+                <th colspan="2"></th>
+            </tr>
+            </thead>
+            <tbody id="services-table-body">
+            </tbody>
+        </table>
+        <button type="button" id="add-service">Add service</button>
+        <button type="button" id="logoff">log off</button>
+    </form>
 </div>
 <div id="edit-service" style="display:none;">
-    <form method="POST">
+    <form>
         <div>
             <label for="company">company:</label>
             <input type="text" id="company" />
+        </div>
+        <div>
+            <label for="serviceName">service name:</label>
+            <input type="text" id="serviceName" />
+        </div>
+        <div>
+            <label for="description">description:</label>
+            <input type="text" id="description" />
         </div>
         <div>
             <label for="location">location:</label>
@@ -87,9 +99,11 @@
                 <option value="unavailable">unavailable</option>
             </select>
         </div>
+
         <button type="button" id="adding-service">add</button>
         <button type="button" id="edit-cancel">cancel</button>
-        </form>
+
+    </form>
 </div>
 
 <script type="module" src="./index.js"></script>

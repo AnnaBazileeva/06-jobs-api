@@ -1,17 +1,21 @@
 import { enableInput, inputEnabled, message, setDiv,getToken } from "./index.js";
-import {showServices} from "./services";
+import {showServices} from "./services.js";
 
 let addEditDiv = null;
 let company = null;
 let location = null;
 let status = null;
 let addingService = null;
+let serviceName = null;
+let description = null;
 
 const BASE_URL = "http://localhost:3000"
 
 export const handleAddEdit = () => {
     addEditDiv = document.getElementById("edit-service");
     company = document.getElementById("company");
+    serviceName = document.getElementById("serviceName");
+    description = document.getElementById("description");
     location = document.getElementById("location");
     status = document.getElementById("status");
     addingService = document.getElementById("adding-service");
@@ -24,6 +28,7 @@ export const handleAddEdit = () => {
 
                 let method = "POST";
                 let url = `${BASE_URL}/api/v1/services`;
+                console.log("fetching:", url);
                 try {
                     const response = await fetch(url, {
                         method: method,
@@ -35,6 +40,8 @@ export const handleAddEdit = () => {
                             company: company.value,
                             location: location.value,
                             status: status.value,
+                            serviceName: serviceName.value,
+                            description: description.value,
                         }),
                     });
 
@@ -45,7 +52,7 @@ export const handleAddEdit = () => {
 
                         company.value = "";
                         location.value = "";
-                        status.value = "pending";
+                        status.value = "available";
 
                         showServices();
                     } else {
